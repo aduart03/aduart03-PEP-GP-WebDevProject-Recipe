@@ -73,17 +73,18 @@ window.addEventListener("DOMContentLoaded", () => {
      */
     addRecipeButton.addEventListener("click",addRecipe);
 
-    updateRecipeButton.addEventListener("click", updateRecipe());
+    updateRecipeButton.addEventListener("click", updateRecipe);
 
-    deleteRecipeButton.addEventListener("click", deleteRecipe());
+    deleteRecipeButton.addEventListener("click", deleteRecipe);
 
-    searchRecipeButton.addEventListener("click",searchRecipes());
+    searchRecipeButton.addEventListener("click",searchRecipes);
 
-    adminLogoutButton.addEventListener("click",processLogout());
+    adminLogoutButton.addEventListener("click",processLogout);
 
     /*
      * TODO: On page load, call getRecipes() to populate the list
      */
+    getRecipes();
 
 
 
@@ -96,6 +97,17 @@ window.addEventListener("DOMContentLoaded", () => {
      */
     async function searchRecipes() {
         // Implement search logic here
+        // AAA - Arrange, Act, Assert
+        const searchTerm = searchRecipeInput.value.trim();
+
+        // build url
+        const url = `${BASE_URL}/recipes?name=${searchTerm}`;
+
+        try{
+
+        }catch(error){
+            console.log("Error", error); alert(error);
+        }
     }
 
     /**
