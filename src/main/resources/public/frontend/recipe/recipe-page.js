@@ -105,7 +105,7 @@ window.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        // build url
+        // build url -> get request
         const url = `${BASE_URL}/recipes?name=${searchTerm}`;
 
 
@@ -127,6 +127,67 @@ window.addEventListener("DOMContentLoaded", () => {
      */
     async function addRecipe() {
         // Implement add logic here
+        const addNameFormInputs = addRecipeNameInput.value.trim();
+        const addInstructionsFormInputs = addRecipeInstructionsInput.value.trim();
+        const token = sessionStorage.getItem("auth-token");
+
+        if (!addNameFormInputs || !addInstructionsFormInputs){
+            alert("Name or Instructions not procided. Input name and instructions for recipe!");
+            return;
+        }
+        if (!token){
+            alert("Please login first.");
+            return;
+
+        }
+
+        const newRecipe={
+            name : addNameFormInputs,
+            instructions: addInstructionsFormInputs
+        }
+
+        const requestOptions = {
+            method: "POST",
+            mode: "cors",
+            cache: "no-cache",
+            credentials: "same-origin",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization" : `Bearer ${token}`,
+            },
+            redirect: "follow",
+            referrerPolicy: "no-referrer",
+            body: JSON.stringify(newRecipe)
+        };
+
+
+        try{
+            const response = await fetch(`${BASE_URL}/recipes`, requestOptions);
+            if (response.status === 201){
+                // On success: 
+                // 1. clear inputs
+                addRecipeNameInput.value ="";
+                addRecipeInstructionsInput.value = "";
+
+                // 2. fetch latest recipes
+                await getRecipes();
+
+                // 3. refresh the list
+                refreshRecipeList();
+                
+            
+            }else if (response.status === 401){
+                alert("User not authorized");
+                
+            }else{
+                alert("Unknown issue");
+            }
+
+        }catch(error){
+            console.log("Error", error);
+             alert(error);
+        }
+
     }
 
     /**
