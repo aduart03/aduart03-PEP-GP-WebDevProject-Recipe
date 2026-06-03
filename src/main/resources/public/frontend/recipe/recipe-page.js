@@ -20,13 +20,16 @@ window.addEventListener("DOMContentLoaded", () => {
     // Add
     const addRecipeNameInput = document.getElementById("add-recipe-name-input");
     const addRecipeInstructionsInput = document.getElementById("add-recipe-instructions-input");
+    const addRecipeButton = document.getElementById("add-recipe-submit-input");
 
     // Update
     const updateRecipeNameInput = document.getElementById("update-recipe-name-input");
     const updateRecipeInstructionsInput = document.getElementById("update-recipe-instructions-input");
+    const updateRecipeButton = document.getElementById("update-recipe-submit-input");
 
     // Delete
     const deleteRecipeInput = document.getElementById("delete-recipe-name-input");
+    const deleteRecipeButton = document.getElementById("delete-recipe-submit-input");
 
     // List container
     const listRecipes = document.getElementById("recipe-list");
@@ -36,7 +39,8 @@ window.addEventListener("DOMContentLoaded", () => {
     const adminLogoutButton = document.getElementById("logout-button");
 
     // Search Recipes
-    const searchRecipeButton = document.getElementById("search-input");
+    const searchRecipeInout = document.getElementById("search-input");
+    const searchRecipeButton = document.getElementById("search-button");
     
 
     /*
@@ -46,7 +50,7 @@ window.addEventListener("DOMContentLoaded", () => {
         alert("Token does'nt exist!");
         return;
     }else{
-        document.getElementById("logout-button").style.visibility = "visible";
+        logoutButton.hidden = false;
     }
 
     /*
@@ -56,7 +60,7 @@ window.addEventListener("DOMContentLoaded", () => {
         alert("Token does'nt exist!");
         return;
     }else{
-        document.getElementById("admin-link").style.visibility = "visible";
+        adminLink.hidden = false;
     }
 
     /*
@@ -67,27 +71,20 @@ window.addEventListener("DOMContentLoaded", () => {
      * - Search button → searchRecipes()
      * - Logout button → processLogout()
      */
-    addRecipeNameInput.addEventListener("click", addRecipe());
-    addRecipeInstructionsInput.addEventListener("click",addRecipe());
+    addRecipeButton.addEventListener("click",addRecipe);
 
-    updateRecipeNameInput.addEventListener("click", updateRecipe());
-    updateRecipeInstructionsInput.addEventListener("click",updateRecipe());
+    updateRecipeButton.addEventListener("click", updateRecipe());
 
-    deleteRecipeInput.addEventListener("click", deleteRecipe());
+    deleteRecipeButton.addEventListener("click", deleteRecipe());
 
     searchRecipeButton.addEventListener("click",searchRecipes());
 
     adminLogoutButton.addEventListener("click",processLogout());
 
-    
-
-    
-    
-
-
     /*
      * TODO: On page load, call getRecipes() to populate the list
      */
+
 
 
     /**
