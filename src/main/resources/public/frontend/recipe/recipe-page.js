@@ -46,17 +46,17 @@ window.addEventListener("DOMContentLoaded", () => {
     /*
      * TODO: Show logout button if auth-token exists in sessionStorage
      */
-    if (!sessionStorage.getItem("auth-token", token) ){
+    if (!sessionStorage.getItem("auth-token") ){
         alert("Token does'nt exist!");
         return;
     }else{
-        logoutButton.hidden = false;
+        adminLogoutButton.hidden = false;
     }
 
     /*
      * TODO: Show admin link if is-admin flag in sessionStorage is "true"
      */
-    if(!sessionStorage.getItem("is-admin",isAdmin)){
+    if(!sessionStorage.getItem("is-admin")){
         alert("Token does'nt exist!");
         return;
     }else{
@@ -100,16 +100,17 @@ window.addEventListener("DOMContentLoaded", () => {
         // AAA - Arrange, Act, Assert
         const searchTerm = searchRecipeInput.value.trim();
 
+        if (!searchTerm){
+            alert("Please enter recipe name");
+            return;
+        }
+
         // build url
         const url = `${BASE_URL}/recipes?name=${searchTerm}`;
 
-        try{
-            if (!url){
-                alert("Could not make get request. Url Page not found!");
 
-            }else{
+        try{
                 refreshRecipeList();
-            }
 
         }catch(error){
             console.log("Error", error); alert(error);
