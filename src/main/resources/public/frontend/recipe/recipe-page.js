@@ -17,13 +17,37 @@ window.addEventListener("DOMContentLoaded", () => {
      * - Search input
     */
 
+    // Add
+    const recipeNameInput = document.getElementById("add-recipe-name-input");
+    const recipeInstructionsInput = document.getElementById("add-recipe-instructions-input");
+
+    // Update
+    const updateRecipeNameInput = document.getElementById("update-recipe-name-input");
+    const updateRecipeInstructionsInput = document.getElementById("update-recipe-instructions-input");
+
+    // Delete
+    const deleteRecipeInput = document.getElementById("delete-recipe-name-input");
+    
+
     /*
      * TODO: Show logout button if auth-token exists in sessionStorage
      */
+    if (!sessionStorage.getItem("auth-token", token) ){
+        alert("Token does'nt exist!");
+        return;
+    }else{
+        document.getElementById("logout-button").style.visibility = "visible";
+    }
 
     /*
      * TODO: Show admin link if is-admin flag in sessionStorage is "true"
      */
+    if(!sessionStorage.getItem("is-admin",isAdmin)){
+        alert("Token does'nt exist!");
+        return;
+    }else{
+        document.getElementById("admin-link").style.visibility = "visible";
+    }
 
     /*
      * TODO: Attach event handlers

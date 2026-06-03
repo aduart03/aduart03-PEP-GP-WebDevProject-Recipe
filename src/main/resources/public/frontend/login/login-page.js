@@ -92,7 +92,7 @@ async function processLogin() {
             const [token, isAdmin] = responseText.split(" ");
 
             sessionStorage.setItem("auth-token",token);
-            sessionStorage.setItem("isAdmin",isAdmin);
+            sessionStorage.setItem("is-admin",isAdmin);
 
             // TODO: Optionally show the logout button if applicable
             logoutButton.style.visibility = "visible";
