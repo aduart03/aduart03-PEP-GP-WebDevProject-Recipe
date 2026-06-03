@@ -91,19 +91,29 @@ async function processLogin() {
             const responseText = await response.text();
             const [token, isAdmin] = responseText.split(" ");
 
-            sessionStorage.setItem(token,isAdmin);
+            sessionStorage.setItem("auth-token",token);
+            sessionStorage.setItem("isAdmin",isAdmin);
+
+            // TODO: Optionally show the logout button if applicable
+            logoutButton.style.visibility = "visible";
+
+            // TODO: Add a small delay (e.g., 500ms) using setTimeout before redirecting
+            // - Use window.location.href to redirect to the recipe page
+            setTimeout(()=> {
+                window.location.href = `${BASE_URL}/recipe-page.html`
+                console.log("redirecting to recipe page...")
+            },500);
+
+        }else if (response.status === 401){
+            // TODO: If response status is 401
+            // - Alert the user with "Incorrect login!"
+            alert("Incorrect login!");
+
+        } else {
+            // TODO: For any other status code
+            // - Alert the user with a generic error like "Unknown issue!"
+            alert("Unknown issue!");
         }
-
-        // TODO: Optionally show the logout button if applicable
-
-        // TODO: Add a small delay (e.g., 500ms) using setTimeout before redirecting
-        // - Use window.location.href to redirect to the recipe page
-
-        // TODO: If response status is 401
-        // - Alert the user with "Incorrect login!"
-
-        // TODO: For any other status code
-        // - Alert the user with a generic error like "Unknown issue!"
 
     } catch (error) {
         // TODO: Handle any network or unexpected errors
