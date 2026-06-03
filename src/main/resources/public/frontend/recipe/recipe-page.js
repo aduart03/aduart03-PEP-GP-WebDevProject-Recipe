@@ -18,8 +18,8 @@ window.addEventListener("DOMContentLoaded", () => {
     */
 
     // Add
-    const recipeNameInput = document.getElementById("add-recipe-name-input");
-    const recipeInstructionsInput = document.getElementById("add-recipe-instructions-input");
+    const addRecipeNameInput = document.getElementById("add-recipe-name-input");
+    const addRecipeInstructionsInput = document.getElementById("add-recipe-instructions-input");
 
     // Update
     const updateRecipeNameInput = document.getElementById("update-recipe-name-input");
@@ -27,6 +27,16 @@ window.addEventListener("DOMContentLoaded", () => {
 
     // Delete
     const deleteRecipeInput = document.getElementById("delete-recipe-name-input");
+
+    // List container
+    const listRecipes = document.getElementById("recipe-list");
+
+    // Admin link and logout button
+    const adminLink = document.getElementById("admin-link");
+    const adminLogoutButton = document.getElementById("logout-button");
+
+    // Search Recipes
+    const searchRecipeButton = document.getElementById("search-input");
     
 
     /*
@@ -57,6 +67,23 @@ window.addEventListener("DOMContentLoaded", () => {
      * - Search button → searchRecipes()
      * - Logout button → processLogout()
      */
+    addRecipeNameInput.addEventListener("click", addRecipe());
+    addRecipeInstructionsInput.addEventListener("click",addRecipe());
+
+    updateRecipeNameInput.addEventListener("click", updateRecipe());
+    updateRecipeInstructionsInput.addEventListener("click",updateRecipe());
+
+    deleteRecipeInput.addEventListener("click", deleteRecipe());
+
+    searchRecipeButton.addEventListener("click",searchRecipes());
+
+    adminLogoutButton.addEventListener("click",processLogout());
+
+    
+
+    
+    
+
 
     /*
      * TODO: On page load, call getRecipes() to populate the list
