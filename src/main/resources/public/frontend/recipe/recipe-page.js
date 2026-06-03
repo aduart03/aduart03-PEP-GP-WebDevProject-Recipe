@@ -39,7 +39,7 @@ window.addEventListener("DOMContentLoaded", () => {
     const adminLogoutButton = document.getElementById("logout-button");
 
     // Search Recipes
-    const searchRecipeInout = document.getElementById("search-input");
+    const searchRecipeInput = document.getElementById("search-input");
     const searchRecipeButton = document.getElementById("search-button");
     
 
@@ -104,6 +104,12 @@ window.addEventListener("DOMContentLoaded", () => {
         const url = `${BASE_URL}/recipes?name=${searchTerm}`;
 
         try{
+            if (!url){
+                alert("Could not make get request. Url Page not found!");
+
+            }else{
+                refreshRecipeList();
+            }
 
         }catch(error){
             console.log("Error", error); alert(error);

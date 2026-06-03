@@ -1,7 +1,7 @@
-commit a93b7b1c3acf5e5e75b6aff5595027c484336c37
+commit 27efc61f352542f40721bd24b844142f9c4954cd
 Author: aduart03 <aduart03@github.com>
-Date:   Wed Jun 3 22:23:58 2026 +0000
+Date:   Wed Jun 3 22:57:40 2026 +0000
 
-    recipepage added event listeners
+    recipe js continuatuon
 
- 2 files changed, 33 insertions(+), 6 deletions(-)
+ 2 files changed, 16 insertions(+), 4 deletions(-)
