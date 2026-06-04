@@ -94,6 +94,7 @@ window.addEventListener("DOMContentLoaded", () => {
         // AAA - Arrange, Act, Assert
         // read sarch term, get the value: we will use later
         const searchTerm = searchRecipeInput.value.trim();
+        const token = sessionStorage.getItem("auth-token");
     
         // Validate recipe was input
         if (!searchTerm){
@@ -109,16 +110,22 @@ window.addEventListener("DOMContentLoaded", () => {
             credentials: "same-origin",
             headers: {
                 "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
             },
             redirect: "follow",
-            referrerPolicy: "no-referrer",
+            referrerPolicy: "no-referrer"
         }
 
         try{
             // build url -> get request
             const response = await fetch(`${BASE_URL}/recipes?name=${searchTerm}`, requestOption);
-            recipes = await response.json(); // turn json to javscript object
-            refreshRecipeList();
+            if (response.status === 200){
+                recipes = await response.json(); // turn json to javscript object
+                refreshRecipeList();
+            }else{
+                alert("No recipes found.");
+
+            }
 
         }catch(error){
             console.log("Error", error); alert(error);
@@ -185,10 +192,7 @@ window.addEventListener("DOMContentLoaded", () => {
                 addRecipeInstructionsInput.value = "";
 
                 // 2. fetch latest recipes
-                await getRecipes();
-
-                // 3. refresh the list
-                refreshRecipeList();
+                await getRecipes(); // refreshRecipeList(); gets called 
                 
             
             }else if (response.status === 401){
@@ -215,6 +219,85 @@ window.addEventListener("DOMContentLoaded", () => {
      */
     async function updateRecipe() {
         // Implement update logic here
+        
+        // Get values
+        const nameInputValue = updateRecipeNameInput.value; // use name to retrieve recipe
+        const instructionsInputValue = updateRecipeInstructionsInput.value;
+        const token = sessionStorage.getItem("auth-token");
+
+        // Validation
+        if (!nameInputValue || !instructionsInputValue){
+            alert("Please provide a name or instructions.")
+            return;
+        }
+
+        // Recipe object update: only instructions can be updated
+        const updatedRecipe = {
+            instructions : instructionsInputValue 
+        }
+
+        // Create request option object
+        // Get request object 
+        const requestOption = {
+            method: "GET",
+            mode: "cors",
+            cache: "no-cache",
+            credentials: "same-origin",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            redirect: "follow",
+            referrerPolicy: "no-referrer"
+        }
+
+        // Put Request
+        const putRequestOption = {
+            method: "PUT",
+            mode: "cors",
+            cache: "no-cache",
+            credentials: "same-origin",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            redirect: "follow",
+            referrerPolicy: "no-referrer",
+            body: JSON.stringify(updatedRecipe)
+        }
+
+        // Fetch current Recipes to locate the recipe by name
+        try{
+            const response = await fetch(`${BASE_URL}/recipes?name=${nameInputValue}`, requestOption); //return response object
+            recipes = await response.json(); //turn json to javascript object 
+
+            if (recipes.length === 0) {
+                alert("Recipe not found");
+                return;
+            }
+
+            // Recipe to update
+            const recipeToUpdate = recipes[0];
+            const id = recipeToUpdate.id;
+
+            // send put request
+            const update = await fetch(`${BASE_URL}/recipes/${id}`, putRequestOption); //return response object
+
+            if (update.status === 200) {
+                updateRecipeNameInput.value = "";
+                updateRecipeInstructionsInput.value = "";
+                await getRecipes(); // getRecipes() already calls refreshRecipeList()
+            }else{
+                alert("Failed to update recipe");
+            }
+
+        }catch(error){
+            console.log("Error: ", error);
+            alert(error);
+
+        }
+
+
     }
 
     /**
@@ -226,6 +309,73 @@ window.addEventListener("DOMContentLoaded", () => {
      */
     async function deleteRecipe() {
         // Implement delete logic here
+
+        // Get Recipe name
+        const deleteRecipeValue = deleteRecipeInput.value;
+        const token = sessionStorage.getItem("auth-token"); // Auth token
+
+        if (!deleteRecipeValue.trim()) {
+            alert("Please enter a recipe name");
+            return;
+        }
+
+        // Delete requestOption
+        const requestOption = {
+            method: "GET",
+            mode: "cors",
+            cache: "no-cache",
+            credentials: "same-origin",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            redirect: "follow",
+            referrerPolicy: "no-referrer"
+        }
+
+        const deleteRequestOption = {
+            method: "DELETE",
+            mode: "cors",
+            cache: "no-cache",
+            credentials: "same-origin",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            redirect: "follow",
+            referrerPolicy: "no-referrer"
+        }
+
+        // Fetch current Recipes to locate the recipe by name
+        try{
+            const response = await fetch(`${BASE_URL}/recipes?name=${deleteRecipeValue}`, requestOption); //return response object
+            recipes = await response.json(); //turn json to javascript object 
+
+            if (recipes.length === 0) {
+                alert("Recipe not found");
+                return;
+            }
+
+            // Recipe to delete
+            const recipeToDelete = recipes[0];
+            const id = recipeToDelete.id;
+
+            // send delete request
+            const deleteResponse = await fetch(`${BASE_URL}/recipes/${id}`, deleteRequestOption); //return response object
+
+            if (deleteResponse.status === 200) {
+                deleteRecipeInput.value = "";
+                await getRecipes(); // getRecipes() already calls refreshRecipeList()
+            }else{
+                alert("Failed to delete recipe");
+            }
+
+        }catch(error){
+            console.log("Error: ", error);
+            alert(error);
+
+        }
+
     }
 
     /**
@@ -239,6 +389,7 @@ window.addEventListener("DOMContentLoaded", () => {
         // Fetch logic
         // No build request object needed to create but better if built for integrity and control.
         // Default request is 'Get' method.
+        const token = sessionStorage.getItem("auth-token");
 
         // Get request object 
         const requestOption = {
@@ -248,9 +399,11 @@ window.addEventListener("DOMContentLoaded", () => {
             credentials: "same-origin",
             headers: {
                 "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+
             },
             redirect: "follow",
-            referrerPolicy: "no-referrer",
+            referrerPolicy: "no-referrer"
         }
     
         try{
@@ -311,6 +464,39 @@ window.addEventListener("DOMContentLoaded", () => {
      */
     async function processLogout() {
         // Implement logout logic here
+        const token = sessionStorage.getItem("auth-token");
+
+        const requestOption = {
+            method: "POST",
+            mode: "cors",
+            cache: "no-cache",
+            credentials: "same-origin",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            redirect: "follow",
+            referrerPolicy: "no-referrer"
+        }
+
+        try{
+            const response = await fetch(`${BASE_URL}/logout`, requestOption); // returns response object
+            if (response.status === 200){
+                // On success:    
+                sessionStorage.removeItem("auth-token");
+                sessionStorage.removeItem("is-admin");
+
+                window.location.href = `${BASE_URL}/login/login-page.html`;
+            
+            }else{
+                alert("Logout failed");
+            }
+
+        }catch(error){
+            console.log("Error", error);
+             alert(error);
+        }
+
     }
 
 });
