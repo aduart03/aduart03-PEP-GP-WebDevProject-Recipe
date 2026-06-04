@@ -1,7 +1,7 @@
-commit dc7e5aab4195601a7db71739a48942f7851e5b25
+commit 3fb8fb15a1799a3ffe1b2b45ce6c66186ea566ff
 Author: aduart03 <aduart03@github.com>
-Date:   Thu Jun 4 23:26:50 2026 +0000
+Date:   Thu Jun 4 23:46:47 2026 +0000
 
-    implementing delete function
+    finished implementing the delete function
 
- 2 files changed, 77 insertions(+), 5 deletions(-)
+ 1 file changed, 17 insertions(+), 22 deletions(-)

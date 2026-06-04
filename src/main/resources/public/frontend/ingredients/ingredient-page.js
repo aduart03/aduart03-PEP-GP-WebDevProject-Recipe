@@ -36,7 +36,7 @@ deleteIngredientSubmitButton.addEventListener("click", deleteIngredient);
  * TODO: Create an array to keep track of ingredients
  */
 
-const ingredients = [];
+let ingredients = [];
 
 /* 
  * TODO: On page load, call getIngredients()
@@ -68,7 +68,7 @@ async function addIngredient() {
 
     // Ingredient object
     const newIngredient = {
-        ingredients: addIngredientValue
+        name: addIngredientValue
     }
 
     const requestOptions = {
@@ -140,7 +140,7 @@ async function getIngredients() {
         const response = await fetch(`${BASE_URL}/ingredients`, requestOptions);
         ingredients = await response.json();
 
-        if (response.status === 201){
+        if (response.status === 200){
             // On success: 
             // 1. clear inputs
             addIngredientNameInput.value ="";
