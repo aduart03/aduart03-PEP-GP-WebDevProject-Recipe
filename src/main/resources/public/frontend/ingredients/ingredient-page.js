@@ -198,39 +198,34 @@ async function deleteIngredient() {
 
     // Fetch logic
     try{
+        const ingredientToDelete = ingredients.find(
+            ingredient => ingredient.name === deleteIngredientValue
+        );
 
-        for (const ingredient of ingredientListContainer){
-            if (ingredient.name == deleteIngredientValue){
-                const id = ingredient.id;
-                const response = await fetch(`${BASE_URL}/ingredients/${id}`, deleteRequestOptions);
-                if (response.status === 201){
-                    // On success: 
-                    // 1. clear inputs
-                    addIngredientNameInput.value ="";
-        
-                    refreshIngredientList();
-                    
-                
-                }else{
-                    alert("Could not add ingredient");
-                }
-
-            }
+        if (!ingredientToDelete) {
+            alert("Ingredient not found");
+            return;
         }
 
+        const response = await fetch(
+            `${BASE_URL}/ingredients/${ingredientToDelete.id}`,
+            deleteRequestOptions
+        );
 
+        if (response.status === 200) {
 
+            deleteIngredientNameInput.value = "";
 
-     
+            await getIngredients();
+
+        } else {
+            alert("Could not delete ingredient");
+        }
 
     }catch(error){
         console.log("Error", error);
          alert(error);
     }
-
-
-
-
 
 }
 
