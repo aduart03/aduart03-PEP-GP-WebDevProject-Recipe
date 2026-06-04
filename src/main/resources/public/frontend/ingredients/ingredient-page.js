@@ -13,20 +13,33 @@ const BASE_URL = "http://localhost:8081"; // backend URL
  * - adminLink (if visible conditionally)
  */
 
+// Get References
+const addIngredientNameInput = document.getElementById("add-ingredient-name-input");
+const addIngredientSubmitButton = document.getElementById("add-ingredient-submit-button");
+
+const deleteIngredientNameInput = document.getElementById("delete-ingredient-name-input");
+const deleteIngredientSubmitButton = document.getElementById("delete-ingredient-submit-button");
+
 /* 
  * TODO: Attach 'onclick' events to:
  * - "add-ingredient-submit-button" → addIngredient()
  * - "delete-ingredient-submit-button" → deleteIngredient()
  */
 
+addIngredientSubmitButton.addEventListener("click", addIngredient);
+
+deleteIngredientSubmitButton.addEventListener("click", deleteIngredient);
+
 /*
  * TODO: Create an array to keep track of ingredients
  */
 
+const ingredients = [];
+
 /* 
  * TODO: On page load, call getIngredients()
  */
-
+window.addEventListener("DOMContentLoaded", getIngredients)
 
 /**
  * TODO: Add Ingredient Function
@@ -41,6 +54,56 @@ const BASE_URL = "http://localhost:8081"; // backend URL
  */
 async function addIngredient() {
     // Implement add ingredient logic here
+    //Get input
+    const addIngredientValue = addIngredientNameInput.value.trim();
+    const token = sessionStorage.getItem("auth-token"); // Session token
+
+    // Validate
+    if (!addIngredientValue){
+        alert("No ingredient added!");
+        return;
+    }
+
+    // Ingredient object
+    const newIngredient = {
+        ingredients: addIngredientValue
+    }
+
+    const requestOptions = {
+        method: "POST",
+        mode: "cors",
+        cache: "no-cache",
+        credentials: "same-origin",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization" : `Bearer ${token}`,
+        },
+        redirect: "follow",
+        referrerPolicy: "no-referrer",
+        body: JSON.stringify(newIngredient)
+    };
+
+    // Fetch logic
+    try{
+        const response = await fetch(`${BASE_URL}/ingredients`, requestOptions);
+        if (response.status === 201){
+            // On success: 
+            // 1. clear inputs
+            addIngredientNameInput.value ="";
+
+            getIngredients();
+            refreshIngredientList();
+            
+        
+        }else{
+            alert("Could not add ingredient");
+        }
+
+    }catch(error){
+        console.log("Error", error);
+         alert(error);
+    }
+
 }
 
 
@@ -55,6 +118,7 @@ async function addIngredient() {
  */
 async function getIngredients() {
     // Implement get ingredients logic here
+    
 }
 
 
