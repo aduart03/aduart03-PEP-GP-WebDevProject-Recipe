@@ -117,7 +117,7 @@ window.addEventListener("DOMContentLoaded", () => {
         try{
             // build url -> get request
             const response = await fetch(`${BASE_URL}/recipes?name=${searchTerm}`, requestOption);
-
+            
             refreshRecipeList();
 
         }catch(error){
@@ -237,10 +237,24 @@ window.addEventListener("DOMContentLoaded", () => {
     async function getRecipes() {
         // Implement get logic here
         // Fetch logic
-        // no build request object needed to create. Default request is 'Get' method
-        //  -> use the await fetch() fucntion , is enough.
+        // No build request object needed to create but better if built for integrity and control.
+        // Default request is 'Get' method.
+
+        // Get request object 
+        const requestOption = {
+            method: "GET",
+            mode: "cors",
+            cache: "no-cache",
+            credentials: "same-origin",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            redirect: "follow",
+            referrerPolicy: "no-referrer",
+        }
+    
         try{
-            const response = await fetch(`${BASE_URL}/recipes`); // returns response object
+            const response = await fetch(`${BASE_URL}/recipes`, requestOption); // returns response object
             if (response.status === 200){
                 // On success:    
                 recipes = await response.json(); 
