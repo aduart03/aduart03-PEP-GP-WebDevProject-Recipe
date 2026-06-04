@@ -132,7 +132,7 @@ async function getIngredients() {
             "Authorization" : `Bearer ${token}`,
         },
         redirect: "follow",
-        referrerPolicy: "no-referrer",
+        referrerPolicy: "no-referrer"
     };
 
     // Fetch logic
@@ -174,6 +174,64 @@ async function getIngredients() {
  */
 async function deleteIngredient() {
     // Implement delete ingredient logic here
+    const deleteIngredientValue = deleteIngredientNameInput.value.trim();
+    const token = sessionStorage.getItem("auth-token"); // Session token
+
+    // Validate
+    if (!deleteIngredientValue){
+        alert("No ingredient added!");
+        return;
+    }
+
+    const deleteRequestOptions = {
+        method: "DELETE",
+        mode: "cors",
+        cache: "no-cache",
+        credentials: "same-origin",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization" : `Bearer ${token}`,
+        },
+        redirect: "follow",
+        referrerPolicy: "no-referrer"
+    };
+
+    // Fetch logic
+    try{
+
+        for (const ingredient of ingredientListContainer){
+            if (ingredient.name == deleteIngredientValue){
+                const id = ingredient.id;
+                const response = await fetch(`${BASE_URL}/ingredients/${id}`, deleteRequestOptions);
+                if (response.status === 201){
+                    // On success: 
+                    // 1. clear inputs
+                    addIngredientNameInput.value ="";
+        
+                    refreshIngredientList();
+                    
+                
+                }else{
+                    alert("Could not add ingredient");
+                }
+
+            }
+        }
+
+
+
+
+     
+
+    }catch(error){
+        console.log("Error", error);
+         alert(error);
+    }
+
+
+
+
+
 }
 
 
@@ -189,5 +247,19 @@ async function deleteIngredient() {
  */
 function refreshIngredientList() {
     // Implement ingredient list rendering logic here
+    ingredientListContainer.innerHTML= "";
+
+    // Create <li> elements
+    for (const ingredient of ingredients ){
+        // Create list item
+        const listItem = document.createElement("li");
+
+        // add name and instrunction to list item
+        listItem.appendChild(document.createElement("p")).textContent = `Ingredient Name : ${ingredient.name}\n`;
+
+        // add list item to un ordered list <ul>
+        ingredientListContainer.appendChild(listItem);
+
+    }
 
 }
