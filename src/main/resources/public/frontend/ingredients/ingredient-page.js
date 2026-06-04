@@ -20,6 +20,7 @@ const addIngredientSubmitButton = document.getElementById("add-ingredient-submit
 const deleteIngredientNameInput = document.getElementById("delete-ingredient-name-input");
 const deleteIngredientSubmitButton = document.getElementById("delete-ingredient-submit-button");
 
+const ingredientListContainer = document.getElementById("ingredient-list");
 
 /* 
  * TODO: Attach 'onclick' events to:

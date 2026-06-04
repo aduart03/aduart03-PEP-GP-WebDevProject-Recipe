@@ -1,7 +1,7 @@
-commit 0fff61a159f334129b0f07a71545236911e712ad
+commit d48d3c4325f767a2b1bd58fcf71a0b51ea993fcf
 Author: aduart03 <aduart03@github.com>
-Date:   Thu Jun 4 22:56:17 2026 +0000
+Date:   Thu Jun 4 23:02:03 2026 +0000
 
-    add ingredients implemented in ingredient page js
+    fixed bugs
 
- 2 files changed, 69 insertions(+), 5 deletions(-)
+ 5 files changed, 53 insertions(+), 14 deletions(-)
