@@ -1,7 +1,7 @@
-commit 1a6fee324440464cecaa707b4894023eb7215d2c
+commit 8d46e52b9c982f368eec3b879ea5d6e4575efe51
 Author: aduart03 <aduart03@github.com>
-Date:   Thu Jun 4 20:13:45 2026 +0000
+Date:   Thu Jun 4 20:21:33 2026 +0000
 
-    implementing searchRecipes()
+    updated comments
 
- 2 files changed, 24 insertions(+), 10 deletions(-)
+ 2 files changed, 22 insertions(+), 8 deletions(-)

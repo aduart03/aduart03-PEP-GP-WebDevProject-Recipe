@@ -117,7 +117,7 @@ window.addEventListener("DOMContentLoaded", () => {
         try{
             // build url -> get request
             const response = await fetch(`${BASE_URL}/recipes?name=${searchTerm}`, requestOption);
-            
+            recipes = await response.json(); // turn json to javscript object
             refreshRecipeList();
 
         }catch(error){
