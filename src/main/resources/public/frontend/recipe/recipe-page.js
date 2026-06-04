@@ -67,15 +67,15 @@ window.addEventListener("DOMContentLoaded", () => {
      * - Search button → searchRecipes()
      * - Logout button → processLogout()
      */
-    addRecipeButton.addEventListener("click",addRecipe);
+    addRecipeButton.addEventListener('onclick',addRecipe);
 
-    updateRecipeButton.addEventListener("click", updateRecipe);
+    updateRecipeButton.addEventListener('onclick', updateRecipe);
 
-    deleteRecipeButton.addEventListener("click", deleteRecipe);
+    deleteRecipeButton.addEventListener('onclick', deleteRecipe);
 
-    searchRecipeButton.addEventListener("click",searchRecipes);
+    searchRecipeButton.addEventListener('onclick',searchRecipes);
 
-    adminLogoutButton.addEventListener("click",processLogout);
+    adminLogoutButton.addEventListener('onclick',processLogout);
 
     /*
      * TODO: On page load, call getRecipes() to populate the list

@@ -20,15 +20,16 @@ const addIngredientSubmitButton = document.getElementById("add-ingredient-submit
 const deleteIngredientNameInput = document.getElementById("delete-ingredient-name-input");
 const deleteIngredientSubmitButton = document.getElementById("delete-ingredient-submit-button");
 
+
 /* 
  * TODO: Attach 'onclick' events to:
  * - "add-ingredient-submit-button" → addIngredient()
  * - "delete-ingredient-submit-button" → deleteIngredient()
  */
 
-addIngredientSubmitButton.addEventListener("click", addIngredient);
+addIngredientSubmitButton.addEventListener('onclick', addIngredient);
 
-deleteIngredientSubmitButton.addEventListener("click", deleteIngredient);
+deleteIngredientSubmitButton.addEventListener('onclick', deleteIngredient);
 
 /*
  * TODO: Create an array to keep track of ingredients
@@ -118,7 +119,44 @@ async function addIngredient() {
  */
 async function getIngredients() {
     // Implement get ingredients logic here
-    
+    const token = sessionStorage.getItem("auth-token"); // Session token
+
+    const requestOptions = {
+        method: "GET",
+        mode: "cors",
+        cache: "no-cache",
+        credentials: "same-origin",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization" : `Bearer ${token}`,
+        },
+        redirect: "follow",
+        referrerPolicy: "no-referrer",
+    };
+
+    // Fetch logic
+    try{
+        const response = await fetch(`${BASE_URL}/ingredients`, requestOptions);
+        ingredients = await response.json();
+
+        if (response.status === 201){
+            // On success: 
+            // 1. clear inputs
+            addIngredientNameInput.value ="";
+
+            refreshIngredientList();
+            
+        
+        }else{
+            alert("Could not add ingredient");
+        }
+
+    }catch(error){
+        console.log("Error", error);
+         alert(error);
+    }
+
+
 }
 
 
@@ -150,4 +188,5 @@ async function deleteIngredient() {
  */
 function refreshIngredientList() {
     // Implement ingredient list rendering logic here
+
 }

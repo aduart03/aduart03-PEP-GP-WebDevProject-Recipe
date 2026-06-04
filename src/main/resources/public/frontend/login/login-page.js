@@ -20,7 +20,7 @@ const BASE_URL = "http://localhost:8081"; // backend URL
  * TODO: Add click event listener to login button
  * - Call processLogin on click
  */
-    loginButton.addEventListener("click",processLogin);
+    loginButton.addEventListener('onclick',processLogin);
 
 /**
  * TODO: Process Login Function
