@@ -28,9 +28,9 @@ const ingredientListContainer = document.getElementById("ingredient-list");
  * - "delete-ingredient-submit-button" → deleteIngredient()
  */
 
-addIngredientSubmitButton.addEventListener('onclick', addIngredient);
+addIngredientSubmitButton.addEventListener("click", addIngredient);
 
-deleteIngredientSubmitButton.addEventListener('onclick', deleteIngredient);
+deleteIngredientSubmitButton.addEventListener("click", deleteIngredient);
 
 /*
  * TODO: Create an array to keep track of ingredients

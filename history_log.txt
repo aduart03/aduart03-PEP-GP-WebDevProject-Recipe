@@ -1,7 +1,7 @@
-commit ccedd4b43ffbaf899394856f19b76df4e5efd923
+commit dc7e5aab4195601a7db71739a48942f7851e5b25
 Author: aduart03 <aduart03@github.com>
-Date:   Thu Jun 4 23:04:27 2026 +0000
+Date:   Thu Jun 4 23:26:50 2026 +0000
 
-    added list
+    implementing delete function
 
- 2 files changed, 5 insertions(+), 4 deletions(-)
+ 2 files changed, 77 insertions(+), 5 deletions(-)

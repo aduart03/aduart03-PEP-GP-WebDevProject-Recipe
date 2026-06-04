@@ -17,7 +17,7 @@ const registerButton = document.getElementById("register-button");
 /* 
  * TODO: Ensure the register button calls processRegistration when clicked
  */
-registerButton.addEventListener('onclick', processRegistration);
+registerButton.addEventListener("click", processRegistration);
 
 
 /**
