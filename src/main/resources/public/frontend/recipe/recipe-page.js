@@ -92,19 +92,33 @@ window.addEventListener("DOMContentLoaded", () => {
     async function searchRecipes() {
         // Implement search logic here
         // AAA - Arrange, Act, Assert
+        // read sarch term, get the value: we will use later
         const searchTerm = searchRecipeInput.value.trim();
-
+    
+        // Validate recipe was input
         if (!searchTerm){
             alert("Please enter recipe name");
             return;
         }
 
-        // build url -> get request
-        const url = `${BASE_URL}/recipes?name=${searchTerm}`;
-
+        // Get request object 
+        const requestOption = {
+            method: "GET",
+            mode: "cors",
+            cache: "no-cache",
+            credentials: "same-origin",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            redirect: "follow",
+            referrerPolicy: "no-referrer",
+        }
 
         try{
-                refreshRecipeList();
+            // build url -> get request
+            const response = await fetch(`${BASE_URL}/recipes?name=${searchTerm}`, requestOption);
+
+            refreshRecipeList();
 
         }catch(error){
             console.log("Error", error); alert(error);
@@ -264,7 +278,7 @@ window.addEventListener("DOMContentLoaded", () => {
             const listItem = document.createElement("li");
 
             // add name and instrunction to list item
-            listItem.textContent = `${recipe.name} ${recipe.instructions}`;
+            listItem.textContent = `Recipe: ${recipe.name}\nInstructions: ${recipe.instructions}`;
 
             // add list item to un ordered list <ul>
             listRecipes.appendChild(listItem);
