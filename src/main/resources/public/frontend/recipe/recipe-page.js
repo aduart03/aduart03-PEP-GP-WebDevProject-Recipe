@@ -46,20 +46,16 @@ window.addEventListener("DOMContentLoaded", () => {
     /*
      * TODO: Show logout button if auth-token exists in sessionStorage
      */
-    if (!sessionStorage.getItem("auth-token") ){
-        alert("Token does'nt exist!");
-        return;
-    }else{
+    if (sessionStorage.getItem("auth-token") ){
         adminLogoutButton.hidden = false;
     }
+    
 
     /*
      * TODO: Show admin link if is-admin flag in sessionStorage is "true"
+     * Remember: The type value for "is-admin" is boolean (true or false)
      */
-    if(!sessionStorage.getItem("is-admin")){
-        alert("Token does'nt exist!");
-        return;
-    }else{
+    if(sessionStorage.getItem("is-admin") === "true"){
         adminLink.hidden = false;
     }
 
@@ -85,8 +81,6 @@ window.addEventListener("DOMContentLoaded", () => {
      * TODO: On page load, call getRecipes() to populate the list
      */
     getRecipes();
-
-
 
     /**
      * TODO: Search Recipes Function
@@ -127,10 +121,12 @@ window.addEventListener("DOMContentLoaded", () => {
      */
     async function addRecipe() {
         // Implement add logic here
+        // Get values
         const addNameFormInputs = addRecipeNameInput.value.trim();
         const addInstructionsFormInputs = addRecipeInstructionsInput.value.trim();
         const token = sessionStorage.getItem("auth-token");
 
+        // Validate name and instructions
         if (!addNameFormInputs || !addInstructionsFormInputs){
             alert("Name or Instructions not procided. Input name and instructions for recipe!");
             return;
@@ -141,11 +137,15 @@ window.addEventListener("DOMContentLoaded", () => {
 
         }
 
+        // Create new recipe object
         const newRecipe={
             name : addNameFormInputs,
             instructions: addInstructionsFormInputs
         }
 
+        // Create POST request object
+        // Authorize (use Authorization header) token
+        // 'Authorization' field found in Recipe controller
         const requestOptions = {
             method: "POST",
             mode: "cors",
@@ -161,6 +161,7 @@ window.addEventListener("DOMContentLoaded", () => {
         };
 
 
+        // Fetch logic
         try{
             const response = await fetch(`${BASE_URL}/recipes`, requestOptions);
             if (response.status === 201){
@@ -221,6 +222,29 @@ window.addEventListener("DOMContentLoaded", () => {
      */
     async function getRecipes() {
         // Implement get logic here
+        // Fetch logic
+        // no build request object needed to create. Default request is 'Get' method
+        //  -> use the await fetch() fucntion , is enough.
+        try{
+            const response = await fetch(`${BASE_URL}/recipes`); // returns response object
+            if (response.status === 200){
+                // On success:    
+                recipes = await response.json(); 
+                refreshRecipeList();
+            
+            }else if (response.status === 404){
+                alert("No Recipes found");
+                
+            }else{
+                alert("Unknown issue");
+            }
+
+        }catch(error){
+            console.log("Error", error);
+             alert(error);
+        }
+
+
     }
 
     /**
@@ -231,6 +255,23 @@ window.addEventListener("DOMContentLoaded", () => {
      */
     function refreshRecipeList() {
         // Implement refresh logic here
+        // Clear current list (get rid of child elelments -> <li>'s)
+        listRecipes.innerHTML = "";
+
+        // Create <li> elements
+        for (const recipe of recipes ){
+            // Create list item
+            const listItem = document.createElement("li");
+
+            // add name and instrunction to list item
+            listItem.textContent = `${recipe.name} ${recipe.instructions}`;
+
+            // add list item to un ordered list <ul>
+            listRecipes.appendChild(listItem);
+
+        }
+        
+
     }
 
     /**
