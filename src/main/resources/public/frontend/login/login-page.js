@@ -89,10 +89,22 @@ async function processLogin() {
 
         if (response.status === 200){
             const responseText = await response.text();
-            const [token, isAdmin] = responseText.split(" ");
 
-            sessionStorage.setItem("auth-token",token);
-            sessionStorage.setItem("is-admin",isAdmin);
+            let token;
+            let isAdmin = "false";
+
+            try {
+                const responseJson = JSON.parse(responseText);
+                token = responseJson["auth-token"];
+                isAdmin = responseJson["is-admin"] || "false";
+            } catch (error) {
+                const responseParts = responseText.split(" ");
+                token = responseParts[0];
+                isAdmin = responseParts[1] || "false";
+            }
+
+            sessionStorage.setItem("auth-token", token);
+            sessionStorage.setItem("is-admin", isAdmin);
 
             // TODO: Optionally show the logout button if applicable
             logoutButton.style.visibility = "visible";
