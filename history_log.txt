@@ -1,7 +1,7 @@
-commit 7f6aba9b0b57bc156b2c959c6538e6545a23f688
+commit c6b0e6b87a53e47e4fcd4b7555e68513047dbdd0
 Author: aduart03 <aduart03@github.com>
-Date:   Fri Jun 5 00:25:06 2026 +0000
+Date:   Fri Jun 5 00:25:52 2026 +0000
 
-    login auth token functionality debugging
+    removed unecessary headers from login page js
 
- 2 files changed, 19 insertions(+), 7 deletions(-)
+ 2 files changed, 5 insertions(+), 7 deletions(-)
