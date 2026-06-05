@@ -212,7 +212,7 @@ async function deleteIngredient() {
             deleteRequestOptions
         );
 
-        if (response.status === 200) {
+        if (response.status === 204) {
 
             deleteIngredientNameInput.value = "";
 
