@@ -1,7 +1,7 @@
-commit a90325c476107d18f477923ed9be4b90024add8a
+commit 7f6aba9b0b57bc156b2c959c6538e6545a23f688
 Author: aduart03 <aduart03@github.com>
-Date:   Fri Jun 5 00:22:25 2026 +0000
+Date:   Fri Jun 5 00:25:06 2026 +0000
 
-    debugging and fixing bugs
+    login auth token functionality debugging
 
- 3 files changed, 5 insertions(+), 5 deletions(-)
+ 2 files changed, 19 insertions(+), 7 deletions(-)
