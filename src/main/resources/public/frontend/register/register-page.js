@@ -75,8 +75,6 @@ async function processRegistration() {
             credentials: "same-origin",
             headers: {
                 "Content-Type": "application/json",
-                "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Headers": "*"
             },
             redirect: "follow",
             referrerPolicy: "no-referrer",
