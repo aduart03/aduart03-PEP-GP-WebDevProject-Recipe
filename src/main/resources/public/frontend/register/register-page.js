@@ -90,7 +90,7 @@ async function processRegistration() {
             if (response.status === 201){
     
                 window.location.href =
-                    `${BASE_URL}/login/login-page.html`;
+                    "../login/login-page.html";
     
                 alert("Registration successful.");
     
